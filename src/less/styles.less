@@ -1,0 +1,86 @@
+@text-steps: 13;
+@text-timing: 2s;
+@blink-rate: 0.5s;
+@text-width: 185px;
+@fadeOutDuration: 2s;
+
+.body, html {
+  background: #FFF;
+  height: 100vmin;
+}
+
+.welcomeScreenContainer  {
+  display: flex;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  margin: -@text-width/2 0 0 -@text-width/2;
+  width: 400px;
+  animation-name: hide-welcometext;
+  animation-delay: @text-timing;
+  animation-duration: @fadeOutDuration;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+
+.welcomeScreenContent h1  {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  white-space: nowrap; /* Keeps the content on a single line */
+  font-family: monospace;
+  animation: typing @text-timing steps(@text-steps, end);
+}
+
+.textCursor {
+  display: block;
+  position: absolute;
+  border-bottom: .15em solid #000;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  left: 0px;
+  height: 2em;
+  width: 10px;
+  animation: moving-blink-caret @text-timing steps(@text-steps, end),
+  blink-caret @blink-rate steps(@text-steps, end) infinite;
+  animation-fill-mode: forwards;
+}
+
+.svgAnimation{
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: animate-svg 5s linear infinite,
+  svg-fadeout 5s linear infinite;
+}
+
+@keyframes animate-svg{
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes svg-fadeout{
+  0%, 80% {opacity: 1;}
+  100% {opacity: 0;}
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes moving-blink-caret{
+  0% {left: 0;}
+  100% {left: @text-width}
+
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #000 }
+}
+
+@keyframes hide-welcometext {
+  0% {opacity: 1;}
+  100% {opacity: 0;}
+}
+
+   
